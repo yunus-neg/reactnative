@@ -1,27 +1,15 @@
 import React, { Component } from "react";
-import {
-  Text,
-  TextInput,
-  View,
-  Button,
-} from "react-native";
+import { Text, TextInput, View, Button } from "react-native";
 import { init as firebase } from "../../firebase";
 
 export default class login extends Component {
   state = {
-    emailLogin: "a@a.com",
-    passwordLogin: "123456",
-    userlogin: null,
+    emailLogin: "",
+    passwordLogin: "",
+    userlogin: null
   };
 
-  emailLoginChanged = text => {
-    this.setState({ emailLogin: text });
-  };
-  passwordLoginChanged = text => {
-    this.setState({ passwordLogin: text });
-  };
-
-  login = event => {
+  login = () => {
     const email = this.state.emailLogin;
     const password = this.state.passwordLogin;
     if (!email || !password) {
@@ -32,10 +20,7 @@ export default class login extends Component {
       .auth()
       .signInAndRetrieveDataWithEmailAndPassword(email, password)
       .then((res, req) => {
-
-
-        this.setState({ userLogin: "user singed in"});
-
+        this.setState({ userLogin: "user singed in" });
       })
       .catch(error => {
         // Handle Errors here.
@@ -49,14 +34,14 @@ export default class login extends Component {
       });
   };
 
-  logout = event => {
+  logout = () => {
     firebase
       .auth()
       .signOut()
       .then(
         () => {
           console.log("Sign-out successful.");
-          this.setState({ userLogin: "user singed out"});
+          this.setState({ userLogin: "user singed out" });
         },
         error => {
           console.log(" An error happened.", error);
@@ -71,25 +56,20 @@ export default class login extends Component {
         <TextInput
           placeholder="email"
           textContentType="emailAddress"
-          onChangeText={text => this.emailLoginChanged(text)}
+          onChangeText={text => this.setState({ emailLogin: text })}
         />
         <View style={{ margin: 7 }} />
 
         <TextInput
           placeholder="Password"
-          onChangeText={text => this.passwordLoginChanged(text)}
+          onChangeText={text => this.setState({ passwordLogin: text })}
           secureTextEntry
         />
         <View style={{ margin: 7 }} />
-        <Button
-          onPress={this.login}
-          title="login"
-        />
+        <Button onPress={this.login} title="login" />
         <View style={{ margin: 7 }} />
         <Button onPress={this.logout} title="logout" />
-        <Text>
-          {this.state.userLogin}
-        </Text>
+        <Text>{this.state.userLogin}</Text>
         <View style={{ margin: 7 }} />
       </View>
     );

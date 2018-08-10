@@ -10,14 +10,7 @@ export default class create extends Component {
     usercreate: null
   };
 
-  emailCreateChanged = text => {
-    this.setState({ emailCreate: text });
-  };
-  passwordCreateChanged = text => {
-    this.setState({ passwordCreate: text });
-  };
-
-  createuser = event => {
+  createuser = () => {
     const email = this.state.emailCreate;
     const password = this.state.passwordCreate;
     if (!email || !password) {
@@ -48,14 +41,13 @@ export default class create extends Component {
         <TextInput
           placeholder="email"
           textContentType="emailAddress"
-
-          onChangeText={text => this.emailCreateChanged(text)}
+          onChangeText={text => this.setState({ emailCreate: text })}
         />
         <View style={{ margin: 7 }} />
 
         <TextInput
           placeholder="Password"
-          onChangeText={text => this.passwordCreateChanged(text)}
+          onChangeText={text => this.setState({ passwordCreate: text })}
           secureTextEntry
         />
         <View style={{ margin: 7 }} />

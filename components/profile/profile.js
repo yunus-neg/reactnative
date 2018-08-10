@@ -33,14 +33,13 @@ export default class profile extends Component {
   };
 
   refresh = () => {
-
     this.setState({
-        firsname: null,
-        lastname: null,
-        cvurl: null,
-        creditname: null,
-        creditnumber: null
-      });
+      firsname: null,
+      lastname: null,
+      cvurl: null,
+      creditname: null,
+      creditnumber: null
+    });
     var user = firebase.auth().currentUser;
     if (!user) {
       alert("you need to sign in");
@@ -50,26 +49,18 @@ export default class profile extends Component {
 
     let database = firebase.database();
     let userdata = database.ref("users/" + uid);
-    let msg = {
-      firstname: this.state.firsname,
-      lastname: this.state.lastname,
-      cvurl: this.state.cvurl,
-      creditname: this.state.creditname,
-      creditnumber: this.state.creditnumber
-    };
+
     userdata.once("value").then(Gotdata => {
       let data = Gotdata.val();
       this.setState({
-        firsname: data["firstname"] ||null,
-        lastname: data["lastname"] ||null,
-        cvurl: data["cvurl"] ||null,
-        creditname: data["creditname"] ||null,
-        creditnumber: data["creditnumber"]||null
+        firsname: data["firstname"] || null,
+        lastname: data["lastname"] || null,
+        cvurl: data["cvurl"] || null,
+        creditname: data["creditname"] || null,
+        creditnumber: data["creditnumber"] || null
       });
       console.log(this.state);
       console.log(data);
-
-
     });
   };
 
