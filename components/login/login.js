@@ -4,8 +4,8 @@ import { init as firebase } from "../../firebase";
 
 export default class login extends Component {
   state = {
-    emailLogin: "",
-    passwordLogin: "",
+    emailLogin: null,
+    passwordLogin: null,
     userlogin: null
   };
 
@@ -18,7 +18,7 @@ export default class login extends Component {
     }
     firebase
       .auth()
-      .signInAndRetrieveDataWithEmailAndPassword(email, password)
+      .signInWithEmailAndPassword(email, password)
       .then((res, req) => {
         this.setState({ userLogin: "user singed in" });
       })
